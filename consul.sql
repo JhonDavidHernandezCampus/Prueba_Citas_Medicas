@@ -74,12 +74,61 @@ ALTER TABLE cita ADD CONSTRAINT fk_medico_cita FOREIGN KEY (cit_medico) REFERENC
 
 #consultas de los endpoinds
 # Obtener todos los médicos de una especialidad específica (por ejemplo, **'Cardiología'**):
-
-SELECT * 
+# Numero 3
+SELECT e.esp_id id_especialidad,e.esp_nombre Nombre_especialidad,m.med_nroMatriculaProsional Matricula_medico, m.med_nombreCompleto Nombre_medico
 FROM especialidad e INNER JOIN medico m 
-ON e.esp_id = m.med_nroMatriculaProsional;
+ON m.med_especialidad = e.esp_id 
+WHERE esp_nombre = 'Cardiología';
 
-SELECT * FROM especialidad;
+# Numero 4
+# Encontrar la próxima cita para un paciente
+# específico (por ejemplo, el paciente con **usu_id 1**):
+SELECT c.*,u.usu_nombre, u.usu_id id_usuario
+FROM  cita c INNER JOIN usuario u
+ON c.cit_datosUsuario = u.usu_id
+INNER JOIN estado_cita ec 
+ON c.cit_estadoCita = ec.estcita_id
+WHERE usu_id = 1 AND ec.estcita_nombre = 'Pendiente'
+ORDER BY c.cit_fecha ASC LIMIT 1;
+
+# Numero 5
+# Encontrar todos los pacientes que tienen citas con un 
+# médico específico (por ejemplo, el médico con **med_nroMatriculaProsional 1**)
+
+SELECT u.*,c.cit_codigo,m.med_nombreCompleto, m.med_nroMatriculaProsional
+FROM usuario u INNER JOIN cita c
+ON u.usu_id = c.cit_datosUsuario 
+INNER JOIN medico m 
+ON c.cit_medico = m.med_nroMatriculaProsional
+WHERE med_nroMatriculaProsional = 123456;
+
+# Numero 6
+# 6. Obtener las consultorías para un paciente específico 
+# (por ejemplo, paciente **con usu_id 1**)o
+SELECT u.usu_id id_usuario,u.usu_nombre,
+        m.med_nroMatriculaProsional Codigo_medico, m.med_nombreCompleto,
+        cs.cons_codigo Codigo_consultorio, cs.cons_nombre Nombre_consultorio
+FROM usuario u
+INNER JOIN cita c ON u.usu_id=cit_datosUsuario
+INNER JOIN medico m ON m.med_nroMatriculaProsional = c.cit_medico
+INNER JOIN consultorio cs ON cs.cons_codigo=m.med_consultorio
+WHERE u.usu_id = 2;
+
+# Numero 7
+# 7. Encontrar todas las citas para un día específico (por ejemplo, **'2023-07-12'**)
+
+SELECT * FROM citas 
+WHERE cit_fecha = '2023-07-12';
+
+#Numero 8  
+
+
+
+INSERT INTO cita (cit_codigo, cit_fecha, cit_estadoCita, cit_medico, cit_datosUsuario) VALUES (6, '2023-07-12', 1, 123456, 1);
+
+SELECT * FROM cita;
+SELECT * FROM usuario;
+SELECT * FROM medico;
 
 
 
