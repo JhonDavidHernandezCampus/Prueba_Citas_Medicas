@@ -5,8 +5,8 @@
   "main": "app.js",
   "type": "module",
   "scripts": {
-    "dev":"nodemon ./app.js",
-    "tsc":"tsc -w"
+    "dev": "nodemon ./app.js",
+    "tsc": "tsc -w"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +16,7 @@
   },
   "devDependencies": {
     "class-transformer": "0.5.1",
+    "class-validator": "0.14.0",
     "dotenv": "16.3.1",
     "mysql2": "3.5.1",
     "nodemon": "3.0.1",

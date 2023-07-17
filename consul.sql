@@ -121,15 +121,70 @@ SELECT * FROM citas
 WHERE cit_fecha = '2023-07-12';
 
 #Numero 8  
+# 8. Obtener los médicos y sus consultorios
+SELECT c.cons_codigo Codigo_consultorio,c.cons_nombre Nombre_Consultorio,
+        m.med_nroMatriculaProsional Matricula_Medico,m.med_nombreCompleto Nombre_Medico,
+        m.med_consultorio Consultorio_del_medico,m.med_especialidad Especialidad
+FROM medico m
+INNER JOIN consultorio c ON c.cons_codigo = m.med_consultorio;
 
 
+#Tabla Citas 
+# 9. Contar el número de citas que un médico tiene en un día específico 
+# (por ejemplo, el médico con **med_nroMatriculaProsional 1 en '2023-07-12'**)
+SELECT COUNT(c.cit_codigo) numumero_citas, c.cit_fecha,m.med_nombreCompleto,
+m.med_nroMatriculaProsional,m.med_consultorio,m.med_especialidad
+FROM medico m
+INNER JOIN cita c ON m.med_nroMatriculaProsional = c.cit_medico
+WHERE c.cit_fecha = '2023-07-12' AND m.med_nroMatriculaProsional = '123456'
+GROUP BY c.cit_fecha,m.med_nombreCompleto,m.med_nroMatriculaProsional;
 
-INSERT INTO cita (cit_codigo, cit_fecha, cit_estadoCita, cit_medico, cit_datosUsuario) VALUES (6, '2023-07-12', 1, 123456, 1);
+
+#Consultorio 
+#10. Obtener los consultorio donde se aplicó las citas de un paciente
+SELECT cs.*,u.usu_id Id_paciente,u.usu_nombre
+FROM usuario u
+INNER JOIN cita c ON u.usu_id = c.cit_datosUsuario
+INNER JOIN medico m ON m.med_nroMatriculaProsional = c.cit_medico
+INNER JOIN consultorio cs ON cs.cons_codigo = med_consultorio
+WHERE c.cit_estadoCita = 4 AND u.usu_id = 1;
+# Tabla Citas
+# 11. Obtener todas las citas realizadas por los 
+# pacientes de un genero si su estado de la cita fue atendidad
+SELECT * 
+FROM cita c INNER JOIN usuario u 
+ON  c.cit_datosUsuario = u.usu_id
+WHERE c.cit_estadoCita = 4 AND u.usu_genero = 2;
+
+# Numero 12 
+# Insertar un paciente a la tabla usuario pero si es menor de edad solicitar
+# primero que ingrese el acudiente y validar si ya estaba registrado el acudiente.
+INSERT INTO usuario (usu_id, usu_nombre, usu_segdo_nombre, usu_primer_apellido_usuar, usu_segdo_apellido_usuar, usu_telefono, usu_direccion, usu_email, usu_tipodoc, usu_genero, usu_acudiente) VALUES (1, 'Juan', 'David', 'Pérez', 'Gómez', '1234567890', 'Calle 123, Ciudad', 'juan@example.com', 1, 1, 1);
 
 SELECT * FROM cita;
-SELECT * FROM usuario;
 SELECT * FROM medico;
+SELECT * FROM usuario;
+SELECT * from acudiente;
+SELECT * FROM estado_cita;
 
+;
+# Tabla citas
+# 13. Mostrar todas las citas que fueron rechazadas y en un mes específico, mostrar 
+# la fecha de la cita, el nombre del usuario y el médico.
+SELECT * FROM cita 
+WHERE cit_estadoCita = 3 
+AND DATE_FORMAT(cit_fecha,'%Y-%m') = '2023-07'  ; 
+
+
+INSERT INTO cita (cit_codigo, cit_fecha, cit_estadoCita, cit_medico, cit_datosUsuario) VALUES (8, '2023-07-12', 4, 123456, 2);
+SELECT * FROM acudiente;
+SELECT * FROM medico;
+SELECT * FROM usuario;
+SELECT * FROM tipo_documento;
+SELECT * FROM genero;
+SELECT * FROM estado_cita;
+
+UPDATE usuario SET usu_genero = 0 WHERE usu_id = 2;
 
 
 
