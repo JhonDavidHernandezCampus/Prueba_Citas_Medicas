@@ -92,7 +92,7 @@ npm i -E -D mysql2
 
 #### Instalamos class-transformer y class-validator
 npm i -E -D class-validator
-npm i -E -D class-tranformer
+npm i -E -D class-transformer
 
 #### Instalamos la libreria para manejar DTO y Configuramos nuestro entorno de desarrollo
 

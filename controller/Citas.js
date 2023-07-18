@@ -116,4 +116,30 @@ router.get('/realizadas/:genero',(req,res)=>{
     });
 })
 
+// Tabla citas
+// 13. Mostrar todas las citas que fueron rechazadas y en un mes específico, mostrar 
+// la fecha de la cita, el nombre del usuario y el médico.
+// 2023-07
+router.get('/rechazadas/:fecha', (req,res)=>{
+    let parametro = req.params.fecha;
+    console.log(parametro);
+    let query = `
+            SELECT * FROM cita 
+            WHERE cit_estadoCita = 3 
+            AND DATE_FORMAT(cit_fecha,'%Y-%m') = '${parametro}' `;
+    conx.query(query,(err, respuesta,fil )=>{
+        if (err){
+            console.log("Error en la consulta de pacientes ");
+            res.send({"Status":"400","Message":"Error en la consulta","Info":err});
+        }else{
+            if (respuesta.length === 0) {
+                res.send({"Status":"200","Message":"No se han rechazado citas para este mes"});
+            }else{
+                res.send(respuesta);
+            }
+        }
+    });
+}); 
+
+
 export default router;

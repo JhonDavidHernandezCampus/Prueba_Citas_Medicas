@@ -67,9 +67,34 @@ router.get('/consultoria/:id_paciente', (req, res)=>{
         }
     });
 })
-
+// Numero 12
 // Insertar paciante validando su edad y si esta registrado
+/* 
+Usuario
+{
+    "usu_id":1098432,
+    "edad":17,
+    "usu_nombre":"Daniel",
+    "usu_segdo_nombre":"Stiven",
+    "usu_primer_apellido_usuar":"Hernandez",
+    "usu_segdo_apellido_usuar":"Ferrer",
+    "usu_telefono":"3022910748",
+    "usu_direccion":"Floridablanca",
+    "usu_email":"jhherdaferrer@gmail.com",
+    "usu_tipodoc":"Precedula",
+    "usu_genero":2,
+    "usu_acudiente":1
+}
 
+
+Acudiente 
+{
+    "acu_codigo":7,
+    "acu_nombreCompleto":"jhon david hernandez ferrer",
+    "acu_telefono":"322121221",
+    "acu_direccion":"Bucaramanga"
+}
+ */
 router.post('/insertar', (req,res)=>{
     let data = req.body;
     if(isNumber(data.usu_acudiente) && data.edad > 17){
@@ -110,31 +135,7 @@ router.post('/insertar', (req,res)=>{
     }
 
 });
-/* 
-Usuario
-{
-    "usu_id":1098432,
-    "edad":17,
-    "usu_nombre":"Daniel",
-    "usu_segdo_nombre":"Stiven",
-    "usu_primer_apellido_usuar":"Hernandez",
-    "usu_segdo_apellido_usuar":"Ferrer",
-    "usu_telefono":"3022910748",
-    "usu_direccion":"Floridablanca",
-    "usu_email":"jhherdaferrer@gmail.com",
-    "usu_tipodoc":"Precedula",
-    "usu_genero":2,
-    "usu_acudiente":1
-}
 
 
-Acudiente 
-{
-    "acu_codigo":7,
-    "acu_nombreCompleto":"jhon david hernandez ferrer",
-    "acu_telefono":"322121221",
-    "acu_direccion":"Bucaramanga"
 
-}
- */
 export default router;

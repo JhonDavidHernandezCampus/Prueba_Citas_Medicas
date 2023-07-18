@@ -173,7 +173,7 @@ SELECT * FROM estado_cita;
 # la fecha de la cita, el nombre del usuario y el médico.
 SELECT * FROM cita 
 WHERE cit_estadoCita = 3 
-AND DATE_FORMAT(cit_fecha,'%Y-%m') = '2023-07'  ; 
+AND DATE_FORMAT(cit_fecha,'%Y-%m') = '2023-07' ; 
 
 
 INSERT INTO cita (cit_codigo, cit_fecha, cit_estadoCita, cit_medico, cit_datosUsuario) VALUES (8, '2023-07-12', 4, 123456, 2);
